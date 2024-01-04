@@ -38,17 +38,6 @@ pipeline {
                 '''
             }
         }
-
-        stage('last') {
-            steps {
-            sh '''
-                eval $(ssh-agent -s)
-                ssh-add ~/.ssh/id_rsa
-                git push origin main
-                ssh-agent -k
-            '''
-            }
-        }
         
     }
 }
