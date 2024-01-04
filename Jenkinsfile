@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-        stage('Checkout') {
+        stage('last') {
             steps {
             sh '''
                 eval $(ssh-agent -s)
