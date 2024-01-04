@@ -23,15 +23,29 @@ pipeline {
         
         stage('Argo Git Clone') {
             steps {
-                git branch: 'main', credentialsId: 'git-jenkins', url: 'https://github.com/shimmins/docker-spring-boot-deploy.git'
+                git branch: 'main', credentialsId: 'credintials-ssh', url: 'https://github.com/shimmins/docker-spring-boot-deploy.git'
                 sh '''
                     rm -rf template/deployment.yaml
                     sed "s/VERSIONTAG/"${VERSION}"/g" "template/deployment-template.yaml" > template/deployment.yaml
                     ls -al
                     git add --all
                     git commit -m 'update image tag'
+                    eval $(ssh-agent -s)
+                    ssh-add ~/.ssh/id_rsa
                     git push origin main
+                    ssh-agent -k
                 '''
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+            sh '''
+                eval $(ssh-agent -s)
+                ssh-add ~/.ssh/id_rsa
+                git push origin main
+                ssh-agent -k
+            '''
             }
         }
         
