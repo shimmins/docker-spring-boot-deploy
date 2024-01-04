@@ -27,8 +27,9 @@ pipeline {
                     sh '''
                         git config --global user.name "${GIT_USERNAME}"
                         git config --global user.password "${GIT_PASSWORD}"
+                        git config --global user.email "admin@example.com"
                         git config --global credential.helper store
-                        git push origin main
+                        git push --force origin main
                     '''
                 }
             }
