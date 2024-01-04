@@ -27,6 +27,8 @@ pipeline {
                     sh '''
                         git config --global user.name "${GIT_USERNAME}"
                         git config --global user.password "${GIT_PASSWORD}"
+                        git push --set-upstream origin qa
+                        git config --global credential.helper store
                         git push origin main
                     '''
                 }
