@@ -8,7 +8,7 @@ image:
   repository: 852524605641.dkr.ecr.us-east-2.amazonaws.com/jenkins_project
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
