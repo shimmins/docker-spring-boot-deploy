@@ -8,17 +8,6 @@ pipeline {
             }
         }
 
-        stage('Credentials') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh '''
-                        git config --global user.name "${GIT_USERNAME}"
-                        git config --global user.password "${GIT_PASSWORD}"
-                    '''
-                }
-            }
-        }
-
         stage('Argo Git Clone') {
             steps {
                 git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/shimmins/docker-spring-boot-deploy.git'
@@ -32,6 +21,17 @@ pipeline {
             }
         }
         
+        stage('Credentials') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh '''
+                        git config --global user.name "${GIT_USERNAME}"
+                        git config --global user.password "${GIT_PASSWORD}"
+                        git push origin main
+                    '''
+                }
+            }
+        }
         stage('SSH Agent Command') {
             steps {        
                 sh '''
