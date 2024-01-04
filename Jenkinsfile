@@ -32,6 +32,7 @@ pipeline {
                     git commit -m 'update image tag'
                     eval $(ssh-agent -s)
                     ssh-add ~/.ssh/id_rsa
+                    git push --set-upstream origin main
                     git push
                     ssh-agent -k
                 '''
