@@ -8,6 +8,19 @@ pipeline {
             }
         }
 
+        stage('Credentials') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'git-jenkins', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh '''
+                        git config --global user.name "${GIT_USERNAME}"
+                        git config --global user.password "${GIT_PASSWORD}"
+                        git config --global user.email "admin@example.com"
+                        git config --global credential.helper store
+                    '''
+                }
+            }
+        }
+        
         stage('Argo Git Clone') {
             steps {
                 git branch: 'main', credentialsId: 'git-jenkins', url: 'https://github.com/shimmins/docker-spring-boot-deploy.git'
@@ -17,21 +30,8 @@ pipeline {
                     ls -al
                     git add --all
                     git commit -m 'update image tag'
+                    git push origin main
                 '''
-            }
-        }
-        
-        stage('Credentials') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'git-jenkins', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh '''
-                        git config --global user.name "${GIT_USERNAME}"
-                        git config --global user.password "${GIT_PASSWORD}"
-                        git config --global user.email "admin@example.com"
-                        git config --global credential.helper store
-                        git push --force origin main
-                    '''
-                }
             }
         }
         
