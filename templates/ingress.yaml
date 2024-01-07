@@ -1,8 +1,8 @@
-apiVersion: networking.k8s.io/v1
+oapiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: monitoring
-  name: monitoring-ingress
+  namespace: demo-prod-1
+  name: demo-ingress
   annotations:
     # Ingress Core Settings
     kubernetes.io/ingress.class: alb
