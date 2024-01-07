@@ -10,7 +10,7 @@ pipeline {
 
         stage('Credentials') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'git-jenkins', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh '''
                         git config --global user.name "${GIT_USERNAME}"
                         git config --global user.password "${GIT_PASSWORD}"
