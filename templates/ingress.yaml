@@ -29,6 +29,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:852524605641:certificate/7af3b24a-cac4-4c34-ae86-e8bebd29a7df
     alb.ingress.kubernetes.io/ssl-redirect: '443'
+  {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
