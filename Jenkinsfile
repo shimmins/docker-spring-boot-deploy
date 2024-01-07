@@ -31,7 +31,7 @@ pipeline {
                     git add --all
                     git commit -m 'update image tag'
                     eval $(ssh-agent -s)
-                    ssh-add ~/.ssh/id_rsa
+                    ssh-add ~/.ssh/gittest
                     git push --set-upstream git@github.com:shimmins/docker-spring-boot-deploy.git main
                     git push
                     ssh-agent -k
