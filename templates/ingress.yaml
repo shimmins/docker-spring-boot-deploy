@@ -20,15 +20,7 @@ metadata:
     {{- include "mychart.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
-    # Ingress Core Settings
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
-    # SSL Settings
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:852524605641:certificate/7af3b24a-cac4-4c34-ae86-e8bebd29a7df
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
@@ -46,7 +38,7 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
-    - host: service.pigrecord.store
+    - host: {{ .host | quote }}
       http:
         paths:
           {{- range .paths }}
