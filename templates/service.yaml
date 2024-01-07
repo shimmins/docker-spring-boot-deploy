@@ -6,10 +6,10 @@ metadata:
   labels:
     {{- include "mychart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 80
+      targetPort: 80
       protocol: TCP
       name: http
   selector:
